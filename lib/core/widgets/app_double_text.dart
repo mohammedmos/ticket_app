@@ -15,9 +15,7 @@ class AppDoubleText extends StatelessWidget {
       children: [
         Text($bigText,style:AppStyles.headlineStyle2),
         InkWell(
-          onTap: (){
-            
-          },
+          onTap: ()=>Navigator.pushNamed(context, "/all_tickets"),
           child: Text($smallText,style: AppStyles.textStyle.copyWith(color: AppStyles.primary),),
         )
       ],

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_app/core/res/styles/app_styles.dart';
+import 'package:ticket_app/core/widgets/app_column_text_layout.dart';
 import 'package:ticket_app/core/widgets/app_layout_builder.dart';
 import 'package:ticket_app/core/widgets/big_circle.dart';
 import 'package:ticket_app/core/widgets/big_dot.dart';
+import 'package:ticket_app/core/widgets/text_style_forth.dart';
+import 'package:ticket_app/core/widgets/text_style_third.dart';
 
 class TicketView extends StatelessWidget {
-  const TicketView({super.key});
+  final Map<String,dynamic> ticket;
+  final bool wholeScreen;
+  const TicketView({super.key, required this.ticket,  this.wholeScreen = false});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +19,7 @@ class TicketView extends StatelessWidget {
         width: size.width + 0.85,
         height: 189,
         child: Container(
-          margin: const EdgeInsets.only(right: 16,left: 16),
+          margin: EdgeInsets.only(right: wholeScreen == true?16:16,left: 16),
           child: Column(
             children: [
               Container(
@@ -27,7 +32,7 @@ class TicketView extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Text('NYC',style: AppStyles.headlineStyle3.copyWith(color: Colors.white)),
+                        TextStyleThird( text: ticket['from']['code']),
                         Expanded(child: Container()),
                         const BigDot(),
                         Expanded(child: Stack(children: [
@@ -39,17 +44,17 @@ class TicketView extends StatelessWidget {
                         ],)),
                         const BigDot(),
                         Expanded(child: Container()),
-                        Text('LDN',style: AppStyles.headlineStyle3.copyWith(color: Colors.white))
+                        TextStyleThird( text: ticket['to']['code'],),
                       ],
                     ),
                     const SizedBox(height: 3),
                     Row(
                       children: [
-                        Text('New-York',style: AppStyles.headlineStyle3.copyWith(color: Colors.white)),
+                        SizedBox(width:100,child: TextStyleForth( text: ticket['from']['name'])),
                         Expanded(child: Container()),
-                        Text('08H 30M',style: AppStyles.headlineStyle3.copyWith(color: Colors.white)),
+                        TextStyleForth(text: ticket['flying_time']),
                         Expanded(child: Container()),
-                        Text('London',style: AppStyles.headlineStyle3.copyWith(color: Colors.white))
+                        SizedBox(width:100,child: TextStyleForth(text: ticket['to']['name'],align:TextAlign.end))
 
                       ],
                     )
@@ -58,11 +63,11 @@ class TicketView extends StatelessWidget {
               ),
               Container(
                 color: AppStyles.ticketOrange ,
-              child: Row(
+              child: const Row(
                 children: [
-                    const BigCircle(isRight: true),
-                  Expanded(child: Container()),
-                  const BigCircle(isRight: false,)
+                    BigCircle(isRight: true),
+                  Expanded(child: AppLayoutBuilder(randomDivider: 16,width: 6)),
+                  BigCircle(isRight: false,)
                 ],
               ),),
               Container(
@@ -74,33 +79,13 @@ class TicketView extends StatelessWidget {
                 child:  Column(
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('NYC',style: AppStyles.headlineStyle3.copyWith(color: Colors.white)),
-                        Expanded(child: Container()),
-                        const BigDot(),
-                        Expanded(child: Stack(children: [
-                          const SizedBox(
-                              height:24,
-                              child: AppLayoutBuilder( randomDivider: 6,)
-                          ),
-                          Center(child: Transform.rotate(angle:1.57,child: const Icon(Icons.local_airport_rounded,color: Colors.white,)),)
-                        ],)),
-                        const BigDot(),
-                        Expanded(child: Container()),
-                        Text('LDN',style: AppStyles.headlineStyle3.copyWith(color: Colors.white))
+                        AppColumnTextLayout(topText: ticket['date'], bottomText: 'Date',alignment: CrossAxisAlignment.start),
+                        AppColumnTextLayout(topText: ticket['departure_time'], bottomText: 'Departure time'),
+                        AppColumnTextLayout(topText: ticket['number'].toString(), bottomText: 'November',alignment: CrossAxisAlignment.end),
                       ],
                     ),
-                    const SizedBox(height: 3),
-                    Row(
-                      children: [
-                        Text('New-York',style: AppStyles.headlineStyle3.copyWith(color: Colors.white)),
-                        Expanded(child: Container()),
-                        Text('08H 30M',style: AppStyles.headlineStyle3.copyWith(color: Colors.white)),
-                        Expanded(child: Container()),
-                        Text('London',style: AppStyles.headlineStyle3.copyWith(color: Colors.white))
-
-                      ],
-                    )
                   ],
                 ),
               ),
