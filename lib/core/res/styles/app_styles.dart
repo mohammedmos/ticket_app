@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class AppStyles {
     static Color primary  = const Color(0xFF687daf);
     static Color textColor  =  const Color(0xFF3b3b3b);
+    static Color kakiColor  =  const Color(0xFFd2bdb6);
     static Color ticketBlue  =  const Color(0xFF526799);
     static Color ticketOrange  =  const Color(0xFFF37867);
     static Color bgPrimaryColor  =  const Color(0xFFeeedf2);
